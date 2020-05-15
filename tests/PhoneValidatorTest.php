@@ -355,6 +355,18 @@ class PhoneValidatorTest extends TestCase
             ['field' => '5550123'],
             ['field' => 'phone:LENIENT,US'])->passes()
         );
+
+        // Validates used German phone, lenient on
+        $this->assertTrue($this->validator->make(
+            ['field' => '+49(0)12-44 614038'],
+            ['field' => 'phone:LENIENT'])->passes()
+        );
+
+        // Rejects used German phone, lenient off
+        $this->assertFalse($this->validator->make(
+            ['field' => '+49(0)12-44 614038'],
+            ['field' => 'phone'])->passes()
+        );
     }
 
     /** @test */
