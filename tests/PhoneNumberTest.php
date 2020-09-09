@@ -91,6 +91,14 @@ class PhoneNumberTest extends TestCase
         $object = new PhoneNumber('+3212345678');
         $this->assertEquals('012 34 56 78', $object->format(PhoneNumberFormat::NATIONAL));
     }
+    
+    /** @test */
+    public function it_can_format_international_numbers_with_wrong_country()
+    {
+        $object = new PhoneNumber('+3212345678');
+        $object = $object->ofCountry('US');
+        $this->assertEquals('012 34 56 78', $object->format(PhoneNumberFormat::NATIONAL));
+    }
 
     /** @test */
     public function it_throws_an_exception_when_formatting_non_international_number_without_given_country()
@@ -237,7 +245,7 @@ class PhoneNumberTest extends TestCase
     }
 
     /** @test */
-    public function it_throws_an_exception_when_the_country_is_mismatched_2()
+    public function it_throws_an_exception_when_an_international_number_also_fails_with_provided_country()
     {
         $object = new PhoneNumber('+15555555555');
         $object = $object->ofCountry('US');
